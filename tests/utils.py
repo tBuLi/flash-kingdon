@@ -10,15 +10,17 @@ from contextlib import contextmanager
 
 @contextmanager
 def measure_memory():
-    torch.cuda.reset_peak_memory_stats()
-    torch.cuda.empty_cache()
-    torch.cuda.synchronize()
-    
     peak = [None]
-    yield peak
-    
-    torch.cuda.synchronize()
-    peak[0] = torch.cuda.max_memory_allocated() / 1024**2
+    if torch.cuda.is_available():
+        torch.cuda.reset_peak_memory_stats()
+        torch.cuda.empty_cache()
+        torch.cuda.synchronize()
+        yield peak
+        torch.cuda.synchronize()
+        peak[0] = torch.cuda.max_memory_allocated() / 1024**2
+    else:
+        yield peak
+        peak[0] = 0.0  # Memory tracking not available on CPU
     
     
 def print_benchmark_results(avg_time_fused, avg_time_torch, mem_fused, mem_torch, title=""):

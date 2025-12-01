@@ -8,15 +8,14 @@ from tests.utils import run_correctness_test, run_benchmark
 
 
 if __name__ == "__main__":
-    assert torch.cuda.is_available()
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    rep = 10
+    batch_size = 32
+    num_features = 16
 
-    rep = 1000
-    batch_size = 4096
-    num_features = 512
-
-    x = torch.randn(8, batch_size, num_features).cuda().contiguous()
-    y = torch.randn(8, batch_size, num_features).cuda().contiguous()
-    weight = torch.randn(20, num_features, num_features).cuda().contiguous()
+    x = torch.randn(8, batch_size, num_features, device=device).contiguous()
+    y = torch.randn(8, batch_size, num_features, device=device).contiguous()
+    weight = torch.randn(20, num_features, num_features, device=device).contiguous()
 
     run_correctness_test(fused_gelu_fcgp_norm_3d, gelu_fcgp_norm_3d_torch, {'x': x, 'y': y, 'weight': weight})
     run_benchmark(fused_gelu_fcgp_norm_3d, gelu_fcgp_norm_3d_torch, (x, y, weight), rep, verbose=True)

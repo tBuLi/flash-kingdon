@@ -1,3 +1,6 @@
+import os
+os.environ["TRITON_CACHE_DIR"] = "C:/triton_cache"
+os.environ["TORCHINDUCTOR_CACHE_DIR"] = "C:/torch_cache"
 import torch
 torch.set_float32_matmul_precision('medium')
 torch._dynamo.config.cache_size_limit = 512

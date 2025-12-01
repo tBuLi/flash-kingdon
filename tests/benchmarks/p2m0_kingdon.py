@@ -5,7 +5,7 @@ import torch
 torch.set_float32_matmul_precision('medium')
 torch._dynamo.config.cache_size_limit = 512
 
-from ops.p2m0 import fused_gelu_sgp_norm_2d
+from ops.p2m0_kingdon import fused_gelu_sgp_norm_2d
 from tests.baselines import gelu_sgp_norm_2d_torch
 from tests.utils import plot_heatmap, print_results_table, run_sweep
 
@@ -20,7 +20,7 @@ def setup_benchmark(batch_size, num_features):
 if __name__ == "__main__":
     assert torch.cuda.is_available()
 
-    path = "tests/benchmarks/results/p2m0"
+    path = "tests/benchmarks/results/p2m0_kingdon"
 
     results = run_sweep(
         fused_gelu_sgp_norm_2d,
@@ -31,7 +31,7 @@ if __name__ == "__main__":
         rep=200
     )
 
-    print_results_table(results, "p2m0")
+    print_results_table(results, "p2m0_kingdon")
 
     plot_heatmap(results, 'speedup_fwd', 'Forward Pass Speedup: Triton vs PyTorch\nCl(2,0)',
                  path + '/speedup/fwd.png')

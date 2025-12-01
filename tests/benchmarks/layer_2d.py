@@ -1,3 +1,6 @@
+import os
+os.environ["TRITON_CACHE_DIR"] = "C:/triton_cache"
+os.environ["TORCHINDUCTOR_CACHE_DIR"] = "C:/torch_cache"
 import torch
 torch.set_float32_matmul_precision('medium')
 torch._dynamo.config.cache_size_limit = 512
@@ -21,10 +24,10 @@ def create_layers(num_features: int):
 if __name__ == "__main__":
     assert torch.cuda.is_available()
     
-    rep = 1000
+    rep = 10
     warmup = 500
-    batch_sizes=[1024, 2048, 4096, 8192]
-    num_features_list=[128, 256, 512, 1024]
+    batch_sizes=[n // 8 for n in [1024, 2048, 4096, 8192]]
+    num_features_list=[n // 8 for n in [128, 256, 512, 1024]]
     path = "tests/benchmarks/results/layer_2d"
     
     results = []

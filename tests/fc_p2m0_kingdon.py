@@ -2,7 +2,7 @@ import torch
 
 torch.set_float32_matmul_precision('medium')
 
-from ops.fc_p2m0 import fused_gelu_fcgp_norm_2d
+from ops.fc_p2m0_kingdon import fused_gelu_fcgp_norm_2d
 from tests.baselines import gelu_fcgp_norm_2d_torch
 from tests.utils import run_correctness_test, run_benchmark
 
