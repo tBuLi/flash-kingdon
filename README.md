@@ -7,7 +7,7 @@ It is a fork of [`flash-clifford`](https://github.com/maxxxzdn/flash-clifford), 
 
 `flash-kingdon` allows you to focus on writing efficient triton kernels, while kingdon automatically generates extremelly efficient implementations of geometric algebra operations for you that are compatible with triton.
 
-<img src="logo.png" alt="Flash Clifford Logo" width="50%">
+<img src="logo.png" alt="Flash Clifford Logo" width="30%">
 
 </div>
 
@@ -77,7 +77,26 @@ def weighted_gp_grad_F_x_F_x_1_x_F(A, B, C, D):
     _x11 = go1*x1
     _x12 = go2*x2
     _x13 = go1*x2
-    return [[_x0*y + _x1*y1 + _x2*y2 - _x3*y12, _x4*y1 + _x5*go1 + _x6*go2 - _x7*y2, _x4*y2 + _x5*go2 - _x6*go1 + _x7*y1, -_x10*y1 - _x8*y12 - _x9*y + go1*weights_8*y2, _x0*x + _x11*weights_4 + _x12*weights_4 - _x9*x12, _x1*x - _x10*x12 + _x4*x1 + _x7*x2, _x2*x + _x4*x2 - _x7*x1 + go1*weights_8*x12, -_x13*weights_5 - _x3*x - _x8*x12 + go2*weights_5*x1, go*x*y, go1*x*y1 + go2*x*y2, -go12*x*y12, go*x1*y1 + go*x2*y2, _x11*y + _x12*y, -_x13*y12 + go2*x1*y12, -go12*x1*y2 + go12*x2*y1, -go*x12*y12, go1*x12*y2 - go2*x12*y1, -go12*x12*y]]
+    return [[
+        _x0*y + _x1*y1 + _x2*y2 - _x3*y12,
+        _x4*y1 + _x5*go1 + _x6*go2 - _x7*y2,
+        _x4*y2 + _x5*go2 - _x6*go1 + _x7*y1,
+        -_x10*y1 - _x8*y12 - _x9*y + go1*weights_8*y2,
+        _x0*x + _x11*weights_4 + _x12*weights_4 - _x9*x12,
+        _x1*x - _x10*x12 + _x4*x1 + _x7*x2,
+        _x2*x + _x4*x2 - _x7*x1 + go1*weights_8*x12,
+        -_x13*weights_5 - _x3*x - _x8*x12 + go2*weights_5*x1,
+        go*x*y,
+        go1*x*y1 + go2*x*y2,
+        -go12*x*y12,
+        go*x1*y1 + go*x2*y2,
+        _x11*y + _x12*y,
+        -_x13*y12 + go2*x1*y12,
+        -go12*x1*y2 + go12*x2*y1,
+        -go*x12*y12,
+        go1*x12*y2 - go2*x12*y1,
+        -go12*x12*y
+    ]]
 ```
 We did not have to write any of this; `kingdon` automatically generated this code and performed the CSE in order to make the code is performant as possible. Contrasting this to the original [implementation](https://github.com/maxxxzdn/flash-clifford/blob/8800de0c67037b8ff5473262254a9a7986e36e5e/ops/p2m0.py#L370), `kingdon` has isolated 14 intermediary results instead of the previous 12, and we did not have to write any of this code into the triton kernel ourselves.
 This highlights the benefits of using `kingdon` for the code generation for geometric operations:
