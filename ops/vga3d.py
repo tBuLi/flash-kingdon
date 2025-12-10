@@ -43,7 +43,3 @@ weighted_gp_grad_func = weighted_gp_grad[X, Y, weights, go].func
 weighted_gp_kernel = triton.jit(weighted_gp_func)
 weighted_gp_grad_kernel = triton.jit(weighted_gp_grad_func)
 gate_kernel = triton.jit(VGA3D.gp[X, gate].func)  # X * gate
-
-import inspect
-result = inspect.getsource(weighted_gp_grad_func)
-print(result)
