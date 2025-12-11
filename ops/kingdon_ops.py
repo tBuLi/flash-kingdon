@@ -10,7 +10,7 @@ def number_of_wgp_terms(X: MultiVector, Y: MultiVector) -> int:
         tot += len(Z.grades)
     return tot
 
-def wgp(X: MultiVector, Y: MultiVector, weights: MultiVector[int]) -> MultiVector:
+def wgp(X: MultiVector, Y: MultiVector, weights: MultiVector[None]) -> MultiVector:
     """ 
     Compute the weighted geometric product between X and Y. 
     The multivectors are mutiplied grade-wise, and a unique weight 
@@ -25,7 +25,7 @@ def wgp(X: MultiVector, Y: MultiVector, weights: MultiVector[int]) -> MultiVecto
             i += 1
     return tot
 
-def wgp_grad(X: MultiVector, Y: MultiVector, weights: MultiVector[int], go: MultiVector) -> MultiVector[int]:
+def wgp_grad(X: MultiVector, Y: MultiVector, weights: MultiVector[None], go: MultiVector) -> MultiVector[int]:
     """Gradient of the weighted geometric product `wgp` with respect to the inputs and weights."""
     syms: list[Symbol] = [*X.values(), *Y.values(), *weights.e]
     wgp_output = wgp(X, Y, weights)
