@@ -3,7 +3,7 @@
 It is a fork of [`flash-clifford`](https://github.com/maxxxzdn/flash-clifford), aimed at showing how the fantastic work done in 
 `flash-clifford` can be made more scalable by leveraging the symbolic code optimization and CSE of the [`kingdon`](https://github.com/tBuLi/kingdon) package.
 
-`flash-kingdon` allows you to focus on writing efficient triton kernels, while kingdon automatically generates extremelly efficient implementations of geometric algebra operations for you that are compatible with triton.
+`flash-kingdon` allows you to focus on writing efficient triton kernels, while kingdon automatically generates extremelly efficient implementations of geometric algebra operations for you that are compatible with triton, see: https://github.com/tBuLi/rotorch for similar
 <div align="center">
 <img src="logo.png" alt="Flash Clifford Logo" width="30%">
 </div>
